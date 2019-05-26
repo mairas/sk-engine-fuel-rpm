@@ -21,7 +21,7 @@ ReactESP app([] () {
   setup_fuel_flow_meter(sensesp_app, D5, D6);
 
   (new DigitalInputCounter(D7, INPUT_PULLUP, RISING, 500))
-      ->connectTo(new Frequency("propulsion.left.revolutions", 1. / 97.,
+      ->connectTo(new Frequency("propulsion.0.revolutions", 1. / 97.,
                                 "/sensors/engine_rpm"));
 
   sensesp_app->enable();
