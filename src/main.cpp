@@ -1,7 +1,8 @@
 #include <Arduino.h>
 
-#include "devices/digital_input.h"
+#include "sensors/digital_input.h"
 #include "sensesp_app.h"
+#include "signalk/signalk_output.h"
 #include "transforms/frequency.h"
 #include "wiring_helpers.h"
 
@@ -20,9 +21,9 @@ ReactESP app([] () {
 
   setup_fuel_flow_meter(sensesp_app, D5, D6);
 
-  (new DigitalInputCounter(D7, INPUT_PULLUP, RISING, 500))
-      ->connectTo(new Frequency("propulsion.0.revolutions", 1. / 97.,
-                                "/sensors/engine_rpm"));
+  (new DigitalInputCounter(D5, INPUT_PULLUP, RISING, 500))
+      ->connectTo(new Frequency(1. / 97., "/sensors/engine_rpm/calibration"))
+      ->connectTo(new SKOutput<float>("propulsion.main.revolutions", "/sensors/engine_rpm/sk"));
 
   sensesp_app->enable();
 });
